@@ -1,23 +1,633 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!--
-      Need a visual blank slate?
-      Remove all code in `styles.css`!
-    -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
-    <nav>
-      <a href="/" aria-current="page">Home</a>
-      <a href="/page2.html">Other page</a>
-    </nav>
-    <main>
-      <h1>Home page</h1>
-    </main>
-  </body>
-</html>
+
+  <style>
+    /* 폰트 설정 및 기본 스타일 */
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.7;
+      color: #333;
+      background: #f7f7f7; /* 부드러운 배경색 */
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* 레이아웃 컨테이너 */
+    header, nav, section, footer {
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+      background: #ffffff;
+      margin-bottom: 20px;
+      border-radius: 12px; /* 부드러운 모서리 */
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05); /* 은은한 그림자 */
+    }
+
+    /* 헤더 스타일 */
+    header {
+      padding: 40px 20px;
+      background: linear-gradient(135deg, #f0f4f7, #e8eff4); /* 그라데이션 배경 */
+      border-radius: 12px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      color: #2c3e50; /* 다크 블루 텍스트 */
+      margin-bottom: 10px;
+      font-weight: 800;
+      line-height: 1.3;
+    }
+    header p {
+      color: #555;
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+    }
+
+    /* 네비게이션 스타일 */
+    nav {
+      background: #2c3e50; /* 네이비 블루 배경 */
+      border-radius: 12px;
+      text-align: center;
+      padding: 18px 0;
+      margin-bottom: 30px;
+    }
+    nav a {
+      color: #ffffff;
+      margin: 0 18px;
+      font-weight: 500;
+      font-size: 1rem;
+      transition: color 0.3s, background-color 0.3s, text-decoration 0.3s;
+      padding: 8px 12px;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+    nav a:hover {
+      background-color: #3c5a78;
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    /* 섹션 제목 스타일 */
+    h2 {
+      border-bottom: 3px solid #f39c12; /* 오렌지색 강조선 */
+      padding-bottom: 8px;
+      margin-bottom: 25px;
+      color: #333;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    /* CTA 버튼 스타일 */
+    .cta {
+      display: inline-block;
+      background-color: #f39c12; /* 오렌지색 버튼 */
+      color: white;
+      padding: 15px 35px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      transition: background-color 0.3s ease, transform 0.2s;
+      margin-top: 15px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .cta:hover {
+      background-color: #e67e22;
+      transform: translateY(-2px);
+    }
+
+    /* 서비스/포트폴리오 카드 스타일 */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      padding: 25px;
+      border-radius: 10px;
+      background: #fafafa;
+      border: 1px solid #eee;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(243, 156, 18, 0.2);
+    }
+    .card h3 {
+      color: #2c3e50;
+      margin-top: 0;
+      font-size: 1.3rem;
+      border-bottom: 2px solid #f39c12;
+      padding-bottom: 5px;
+      margin-bottom: 15px;
+    }
+    .card p {
+      color: #666;
+      font-size: 1rem;
+    }
+
+    /* 견적 폼 스타일 */
+    .form-group {
+      margin-bottom: 20px;
+    }
+    form label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #444;
+    }
+    form input[type="text"], form input[type="tel"], form input[type="number"], form input[type="date"], form textarea, form select {
+      width: calc(100% - 22px);
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+    form input:focus, form textarea:focus, form select:focus {
+      border-color: #f39c12;
+      outline: none;
+    }
+    form button.cta {
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    /* FAQ 스타일 */
+    dl.faq {
+      margin-top: 20px;
+    }
+    dl.faq dt {
+      font-weight: 700;
+      margin-top: 20px;
+      cursor: pointer;
+      color: #2c3e50;
+      font-size: 1.1rem;
+      padding: 10px 15px;
+      background: #fdfdfd;
+      border-radius: 6px;
+      border-left: 4px solid #f39c12;
+    }
+    dl.faq dd {
+      margin-left: 15px;
+      margin-top: 10px;
+      padding: 15px;
+      color: #555;
+      background: #f9f9f9;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      display: none; /* JavaScript로 토글 예정 */
+    }
+    dl.faq dt.active + dd {
+      display: block;
+    }
+
+    /* 정보성 텍스트 스타일 */
+    .info-section {
+      padding: 20px;
+      background: #fdfdfd;
+      border-radius: 10px;
+      margin-top: 30px;
+    }
+    .info-section h3 {
+      font-size: 1.5rem;
+      color: #333;
+      margin-bottom: 15px;
+      border-bottom: 1px dashed #ddd;
+      padding-bottom: 5px;
+    }
+    .info-section p {
+      color: #555;
+      margin-bottom: 15px;
+    }
+
+    /* 표 및 그래프 스타일 */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: left;
+    }
+    th {
+      background-color: #f0f0f0;
+      font-weight: 600;
+    }
+    .graph-container {
+      margin-bottom: 20px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    /* 키워드 리스트 스타일 */
+    .keyword-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    .keyword-list span {
+      background: #eaf3ff;
+      color: #2c3e50;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+    }
+
+    /* 반응형 디자인 */
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2rem;
+      }
+      nav a {
+        margin: 0 10px;
+        font-size: 0.9rem;
+      }
+      section, footer {
+        padding: 15px;
+      }
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+      form input, form select, form textarea {
+        width: calc(100% - 20px);
+      }
+    }
+  </style>
+
+  <!-- JSON-LD Schema for LocalBusiness & Service -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"ProfessionalService",
+    "name":"홍대 인테리어 전문가 그룹",
+    "image":"https://www.yourdomain.kr/images/logo_hongdae_interior.png",
+    "telephone":"010-1234-5678",
+    "address":{
+      "@type":"PostalAddress",
+      "streetAddress":"서울 마포구 와우산로 100",
+      "addressLocality":"홍대앞",
+      "addressRegion":"서울",
+      "postalCode":"04050",
+      "addressCountry":"KR"
+    },
+    "url":"https://www.yourdomain.kr/",
+    "openingHours":"Mo-Sa 09:00-18:00",
+    "areaServed": {
+      "@type": "AdministrativeArea",
+      "name": "홍대, 마포구, 서대문구"
+    },
+    "description": "홍대 지역의 주거 및 상업 공간 인테리어를 전문으로 하는 업체입니다. 2026년 최신 트렌드를 반영한 맞춤 디자인과 합리적인 견적을 제공합니다.",
+    "hasOfferCatalog":{
+      "@type":"OfferCatalog",
+      "name":"인테리어 서비스 목록",
+      "itemListElement":[
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"홍대 아파트 인테리어"}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"홍대 원룸/오피스텔 인테리어"}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"홍대 카페/상업 공간 인테리어"}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"부분 인테리어 (주방/욕실)"}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"사무실/기업 인테리어"}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"홈스타일링 컨설팅"}}
+      ]
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "150"
+    }
+  }
+  </script>
+</head>
+<body>
+
+<header id="top">
+  <h1>홍대 인테리어 견적 비교 | 2026년 최신 가격 및 추천 업체 순위</h1>
+  <p>홍대, 연남동, 합정동 등 마포구 지역 인테리어 전문가의 <strong>정확한 견적</strong>과 <strong>솔직한 후기</strong>를 지금 바로 확인하세요.</p>
+  <a href="#quote-form" class="cta">무료 견적 요청하기</a>
+</header>
+
+<nav>
+  <a href="#services">서비스 영역</a>
+  <a href="#portfolio">포트폴리오</a>
+  <a href="#cost-guide">인테리어 비용 가이드</a>
+  <a href="#quote-form">견적 요청</a>
+  <a href="#faq">자주 묻는 질문</a>
+  <a href="#contact">문의하기</a>
+</nav>
+
+<section id="services" aria-label="서비스 소개">
+  <h2>홍대 인테리어 전문 서비스 영역</h2>
+  <div class="card-grid">
+    <div class="card">
+      <h3>주거 공간 (아파트/빌라) 인테리어</h3>
+      <p>연남동 아파트, 합정동 주택 등 홍대 인근 주거 공간에 최적화된 맞춤형 디자인. 2026년 트렌드를 반영한 모던하고 실용적인 공간 연출을 제안합니다.</p>
+    </div>
+    <div class="card">
+      <h3>원룸/오피스텔 인테리어</h3>
+      <p>서교동 원룸, 동교동 오피스텔 등 1인 가구 밀집 지역의 효율적인 공간 활용 인테리어. 좁은 공간도 넓어 보이게 하는 실용적인 디자인을 저렴한 가격으로 제공합니다.</p>
+    </div>
+    <div class="card">
+      <h3>상업 공간 (카페/매장) 인테리어</h3>
+      <p>홍대 거리의 감성을 담은 유니크한 카페, 식당, 편집샵 인테리어. 고객 유입을 높이는 매력적인 디자인으로 경쟁력을 높여드립니다.</p>
+    </div>
+    <div class="card">
+      <h3>사무실/기업 인테리어</h3>
+      <p>합정동 사무실, 마포구 기업 오피스 리모델링. 효율적인 동선과 쾌적한 업무 환경을 위한 설계. 가성비 높은 견적으로 시공해드립니다.</p>
+    </div>
+    <div class="card">
+      <h3>부분 인테리어 및 홈스타일링</h3>
+      <p>전체 공사가 부담스러운 분들을 위한 주방, 욕실, 거실 등 부분 인테리어 시공. 저렴한 비용으로 공간의 분위기를 바꿀 수 있습니다.</p>
+    </div>
+  </div>
+</section>
+
+<section id="portfolio" aria-label="인테리어 포트폴리오">
+  <h2>홍대 인테리어 포트폴리오 및 내돈내산 후기</h2>
+  <div class="card-grid">
+    <div class="card">
+      <h3>연남동 30평 아파트 리모델링</h3>
+      <p><strong>후기 요약:</strong> "오래된 아파트였는데 신축처럼 변신했어요. 꼼꼼한 시공과 감각적인 디자인 모두 만족합니다. 특히 홍대 인테리어 업체 중 가성비가 훌륭했습니다."</p>
+      <p><strong>시공 내용:</strong> 전체 창호 교체, 주방 확장, 거실 아트월, 시스템 가구 설치</p>
+    </div>
+    <div class="card">
+      <h3>합정동 18평 원룸 인테리어 (미니멀 컨셉)</h3>
+      <p><strong>후기 요약:</strong> "이사 날짜에 맞춰 신속하게 진행해 주셨고, 좁은 공간을 넓게 쓰는 아이디어가 좋았습니다. 홍대 원룸 인테리어를 고민하는 분들께 추천합니다."</p>
+      <p><strong>시공 내용:</strong> 화이트톤 벽지, 바닥재 교체, 붙박이장 설치, 조명 디자인</p>
+    </div>
+    <div class="card">
+      <h3>서교동 카페 리모델링 (인더스트리얼 컨셉)</h3>
+      <p><strong>후기 요약:</strong> "홍대 카페 거리에 어울리는 독특한 분위기를 원했는데, 예상했던 것보다 훨씬 멋진 결과물이 나왔습니다. 비용 대비 만족도가 높았습니다."</p>
+      <p><strong>시공 내용:</strong> 노출 천장, 빈티지 바닥재, 맞춤형 가구 제작, 파사드 디자인</p>
+    </div>
+  </div>
+</section>
+
+<section id="cost-guide" aria-label="인테리어 비용 가이드">
+  <h2>홍대 인테리어 비용: 2026년 예상 견적 가이드</h2>
+  <p>홍대 인테리어 시장은 2026년에도 꾸준히 성장하며 다양한 옵션을 제공하고 있습니다. 인테리어 비용은 '평균 금액', '예상 가격', '업체별 견적 차이점' 등을 종합적으로 고려해야 합니다. 무조건 싼곳을 찾기보다, 시공 품질과 사후관리를 비교하는 것이 중요합니다.</p>
+
+  <h3>1. 홍대 인테리어 평균 비용 분석 (2026년 기준)</h3>
+  <p>홍대 및 마포구 인근 지역의 인테리어 비용은 평당 100만 원에서 200만 원 사이로 형성되며, 이는 자재, 디자인 난이도, 공사 범위에 따라 크게 달라집니다. 특히 상업 공간의 경우 디자인 컨셉에 따른 변동 폭이 큽니다.</p>
+
+  <table>
+    <caption>홍대 인테리어 유형별 예상 비용 (평균 평당 가격)</caption>
+    <thead>
+      <tr>
+        <th>인테리어 유형</th>
+        <th>평균 평당 가격 (예상)</th>
+        <th>공사 범위</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>주거 공간 (아파트/빌라)</td>
+        <td>120만원 ~ 180만원</td>
+        <td>전체 리모델링 (올수리 기준)</td>
+      </tr>
+      <tr>
+        <td>원룸/오피스텔 (부분)</td>
+        <td>100만원 ~ 150만원</td>
+        <td>부분 시공 (주방/욕실/바닥)</td>
+      </tr>
+      <tr>
+        <td>상업 공간 (카페/매장)</td>
+        <td>150만원 ~ 250만원</td>
+        <td>컨셉 디자인 및 시공 (철거 비용 별도)</td>
+      </tr>
+    </tbody>
+  </table>
+  <p><strong>팁:</strong> 인테리어 비용을 저렴하게 하고 싶다면 '부분 인테리어'를 고려하거나, 가구와 소품으로 분위기를 바꾸는 '홈스타일링' 서비스를 이용하는 것도 좋은 대안이 될 수 있습니다.</p>
+
+  <h3>2. 홍대 인테리어 업체 비교 및 선정 장단점</h3>
+  <p>홍대 인테리어 업체는 '개인 디자인 스튜디오', '대형 플랫폼 연계', '종합 인테리어 시공사' 등으로 나뉩니다. 각 유형별 장단점을 비교하여 본인의 프로젝트에 맞는 곳을 선택하는 것이 중요합니다.</p>
+
+  <table>
+    <caption>홍대 인테리어 업체 유형별 장단점</caption>
+    <thead>
+      <tr>
+        <th>업체 유형</th>
+        <th>장점</th>
+        <th>단점</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>개인 디자인 스튜디오</td>
+        <td>독창적 디자인, 높은 전문성, 소통 용이</td>
+        <td>높은 가격, 시공 기간이 길어질 수 있음</td>
+      </tr>
+      <tr>
+        <td>대형 플랫폼 연계 업체</td>
+        <td>다양한 업체 비교, 가격 경쟁력, 체계적 시스템</td>
+        <td>디자인 표준화, 개별 소통의 어려움</td>
+      </tr>
+      <tr>
+        <td>종합 인테리어 시공사</td>
+        <td>원스톱 서비스, 안정적인 공사 진행</td>
+        <td>가격대가 높고, 소규모 프로젝트에 부적합</td>
+      </tr>
+    </tbody>
+  </table>
+  <p><strong>홍대 인테리어 추천:</strong> 고객 후기와 포트폴리오를 반드시 확인하고, 최소 3군데 이상의 업체에서 견적을 받아 '가격 비교'를 하는 것이 좋습니다. 특히, 홍대 지역은 감각적인 디자인을 요구하는 경우가 많아 포트폴리오의 완성도를 중요하게 봐야 합니다.</p>
+
+  <section class="info-section">
+    <h3>홍대 지역 특화 인테리어 정보: 연남동, 합정동, 망원동 키워드 분석</h3>
+    <p>홍대 주변 지역은 상권과 주거 환경이 혼재되어 있어 인테리어 접근 방식이 다릅니다. 연남동과 합정동은 카페와 상업 공간 인테리어 수요가 높으며, 망원동은 주거 지역과 감성적인 소규모 매장 인테리어 수요가 많습니다.</p>
+
+    <div class="keyword-list">
+      <span>홍대인테리어</span>
+      <span>홍대 인테리어 비용</span>
+      <span>홍대 인테리어 견적</span>
+      <span>홍대 리모델링</span>
+      <span>홍대 원룸 인테리어</span>
+      <span>홍대 아파트 인테리어</span>
+      <span>연남동 인테리어</span>
+      <span>합정동 인테리어</span>
+      <span>상수동 인테리어</span>
+      <span>망원동 인테리어</span>
+      <span>서교동 인테리어</span>
+      <span>동교동 인테리어</span>
+      <span>신촌 인테리어</span>
+      <span>이대 인테리어</span>
+      <span>홍대 인테리어 추천</span>
+      <span>홍대 인테리어 업체 순위</span>
+      <span>인테리어 가격 비교</span>
+      <span>저렴한곳</span>
+      <span>내돈내산 후기</span>
+      <span>인테리어 장단점</span>
+      <span>2026 트렌드</span>
+    </div>
+    <p><strong>함께 많이 찾는 키워드:</strong> 홍대 원룸 리모델링, 홍대 인테리어 싼곳, 홍대 20평대 인테리어 비용, 홍대 주방 리모델링, 홍대 인테리어 잘하는 곳, 마포구 인테리어 전문가, 합정동 카페 인테리어</p>
+  </section>
+
+  <section class="info-section">
+    <h3>인테리어 견적 산출 시 고려할 점 (장점/단점 분석)</h3>
+    <p>인테리어 견적을 받을 때 단순히 '최종 금액'만 볼 것이 아니라, 어떤 자재가 사용되는지, 공사 범위의 '장점'과 '단점'이 무엇인지 정확하게 파악해야 합니다. 저렴한 견적의 단점은 저급 자재 사용이나 필수 공정 누락일 수 있습니다. 반면, 높은 견적은 과도한 디자인 비용이 포함될 수 있습니다. 꼼꼼한 비교가 필요합니다.</p>
+  </section>
+
+  <section class="info-section">
+    <h3>2026년 홍대 인테리어 트렌드 분석</h3>
+    <p>2026년 홍대 인테리어 트렌드는 '지속 가능한 디자인'과 '개인 맞춤형 공간'에 초점이 맞춰져 있습니다. 친환경 자재 사용, 미니멀리즘, 스마트홈 기술의 통합이 주요 흐름입니다. 특히 홍대 지역은 감각적인 상업 공간 인테리어가 주를 이루며, 독창성을 중요시하는 경향이 있습니다. 주거 공간에서는 재택근무 증가로 인해 서재 공간이나 1인 취미 공간을 위한 인테리어 수요가 높아지고 있습니다. 이는 홍대 인테리어 업체들이 새로운 디자인을 시도하는 계기가 되고 있습니다.</p>
+
+    <div class="graph-container">
+      <h3>홍대 인테리어 트렌드 선호도 변화 (2026년 예상)</h3>
+      <p><em>(표/그래프 삽입 영역: 예시로 텍스트로 대체)</em></p>
+      <p>미니멀리즘: 40% / 친환경 자재: 30% / 빈티지/인더스트리얼: 20% / 클래식/기타: 10%</p>
+    </div>
+
+    <p><strong>키워드 활용:</strong> "홍대 인테리어 장점"은 획일적인 디자인을 벗어나 개성을 살릴 수 있다는 점입니다. 반면 "홍대 인테리어 단점"은 트렌드가 빠르게 변동하여 유행에 뒤처질 수 있다는 것입니다. 따라서 2026년 트렌드를 반영한 견적을 받는 것이 중요합니다.</p>
+  </section>
+
+  <section class="info-section">
+    <h3>공인된 신뢰성 있는 정보 (외부 링크)</h3>
+    <p>인테리어 공사 관련 법규 및 기준은 정부 기관을 통해 확인하실 수 있습니다.</p>
+    <ul>
+      <li><a href="https://www.law.go.kr/lsInfoP.do?lsiSeq=242043&efYd=20220901#0000" target="_blank">건설산업기본법 (법제처)</a> - 인테리어 공사업 관련 법규를 확인합니다.</li>
+      <li><a href="https://www.molit.go.kr/" target="_blank">국토교통부 (정부24)</a> - 건축 인허가 및 리모델링 기준을 확인합니다.</li>
+      <li><a href="https://ko.wikipedia.org/wiki/%EC%9D%B8%ED%85%8C%EB%A6%AC%EC%96%B4_%EB%94%94%EC%9E%90%EC%9D%B8" target="_blank">인테리어 디자인 정의 (나무위키)</a> - 인테리어 개념을 이해합니다.</li>
+      <li><a href="https://www.kosid.or.kr/" target="_blank">한국실내건축가협회 (KOSID)</a> - 인테리어 디자인 전문가 및 관련 정보를 확인합니다.</li>
+      <li><a href="https://www.kosc.or.kr/" target="_blank">대한전문건설협회</a> - 전문 건설업체의 정보를 확인합니다.</li>
+    </ul>
+  </section>
+</section>
+
+<section id="quote-form" aria-label="무료 견적 신청">
+  <h2>홍대 인테리어 무료 견적 신청하기</h2>
+  <form action="/submit-estimate" method="POST" aria-describedby="견적폼설명">
+    <p id="견적폼설명">아래 폼을 작성해주시면 홍대 지역 인테리어 전문가가 <strong>24시간 이내</strong>에 맞춤형 견적을 안내해드립니다.</p>
+
+    <div class="form-group">
+      <label for="space-type">공간 유형</label>
+      <select id="space-type" name="type" required>
+        <option value="">선택하세요</option>
+        <option value="아파트">아파트</option>
+        <option value="빌라/주택">빌라/주택</option>
+        <option value="원룸/오피스텔">원룸/오피스텔</option>
+        <option value="상업공간(카페/식당)">상업공간 (카페/식당)</option>
+        <option value="사무실">사무실</option>
+        <option value="기타">기타</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="location">시공 예정지 (홍대 인근)</label>
+      <select id="location" name="location" required>
+        <option value="">홍대 상세 지역 선택</option>
+        <option value="연남동">연남동</option>
+        <option value="서교동">서교동</option>
+        <option value="합정동">합정동</option>
+        <option value="망원동">망원동</option>
+        <option value="상수동">상수동</option>
+        <option value="동교동">동교동</option>
+        <option value="창전동">창전동</option>
+        <option value="노고산동">노고산동</option>
+        <option value="신촌동">신촌동</option>
+        <option value="대흥동">대흥동</option>
+        <option value="염리동">염리동</option>
+        <option value="공덕동">공덕동</option>
+        <option value="아현동">아현동</option>
+        <option value="성산동">성산동</option>
+        <option value="중동">중동</option>
+        <option value="상암동">상암동</option>
+        <option value="도화동">도화동</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="size">면적 (평수)</label>
+      <input type="number" id="size" name="size" placeholder="예: 30평" required min="1" />
+    </div>
+
+    <div class="form-group">
+      <label for="budget">예상 예산 범위</label>
+      <select id="budget" name="budget" required>
+        <option value="">예산 선택</option>
+        <option value="1천만원 미만">1천만원 미만</option>
+        <option value="1천만원 ~ 2천만원">1천만원 ~ 2천만원</option>
+        <option value="2천만원 ~ 3천만원">2천만원 ~ 3천만원</option>
+        <option value="3천만원 ~ 5천만원">3천만원">3천만원 ~ 5천만원</option>
+        <option value="5천만원 이상">5천만원 이상</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="style">희망 인테리어 스타일 (선호도)</label>
+      <select id="style" name="style" required>
+        <option value="">선택하세요</option>
+        <option value="미니멀리즘">미니멀리즘 (화이트)</option>
+        <option value="모던 클래식">모던 클래식</option>
+        <option value="인더스트리얼">인더스트리얼</option>
+        <option value="내추럴/우드">내추럴/우드</option>
+        <option value="프렌치 스타일">프렌치 스타일</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="start-date">시공 희망일</label>
+      <input type="date" id="start-date" name="start_date" required />
+    </div>
+
+    <div class="form-group">
+      <label for="details">구체적인 요청 사항</label>
+      <textarea id="details" name="details" rows="5" placeholder="예: 주방 확장, 욕실 전체 교체, 시스템 에어컨 설치 등 상세 요청 사항을 적어주세요."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="phone">연락처</label>
+      <input type="tel" id="phone" name="phone" placeholder="010-1234-5678" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" required />
+    </div>
+
+    <button type="submit" class="cta">무료 견적 요청하기</button>
+  </form>
+</section>
+
+<section id="faq" aria-label="자주 묻는 질문 FAQ">
+  <h2>홍대 인테리어 자주 묻는 질문 (FAQ)</h2>
+  <dl class="faq">
+    <dt>Q1. 홍대 인테리어 견적은 어떻게 산출되나요? 평균 비용은 얼마인가요?</dt>
+    <dd>A1. 인테리어 견적은 공사 범위(전체 vs 부분), 자재 등급(고가 vs 저렴한곳), 디자인 난이도에 따라 달라집니다. 홍대 지역 아파트 전체 리모델링의 경우 평균 평당 120만원 ~ 180만원을 예상합니다. 견적을 받으실 때 '포함 내역'과 '불포함 내역'을 명확히 확인하여 싼곳만 고집하지 않는 것이 중요합니다. 저희 전문가에게 무료 견적을 받아보시면 자세한 견적서를 받아볼 수 있습니다.</dd>
+
+    <dt>Q2. 인테리어 기간은 얼마나 걸리나요? 공사 중 소음 문제는 어떻게 해결하나요?</dt>
+    <dd>A2. 일반적인 30평대 아파트 전체 인테리어는 3주에서 4주 정도 소요됩니다. 원룸이나 부분 인테리어는 1~2주 정도로 짧습니다. 공사 소음은 주변 이웃에게 사전에 양해를 구하고, 소음이 발생하는 철거 작업은 주거 시간대를 피해 진행하는 것이 일반적입니다. 저희 업체는 공사 시작 전 홍보물로 이웃에게 양해를 구하는 서비스를 제공합니다.</dd>
+
+    <dt>Q3. 홍대 인테리어 업체 선정 시 어떤 점을 가장 중요하게 봐야 하나요?</dt>
+    <dd>A3. '가격 비교'도 중요하지만, 무엇보다 업체의 '포트폴리오'와 '고객 후기'를 확인해야 합니다. 특히 홍대 지역은 감각적인 디자인을 요구하는 경우가 많아, 기존에 진행했던 프로젝트의 완성도를 꼼꼼히 살펴보세요. 또한 계약 전 '책임 보험 가입 여부'를 확인하여 혹시 모를 문제에 대비하는 것이 좋습니다. 내돈내산 후기가 많은 곳을 선택하는 것이 안전합니다.</dd>
+
+    <dt>Q4. 원룸 인테리어도 가능한가요? 저렴한 비용으로 할 수 있는 방법이 있나요?</dt>
+    <dd>A4. 네, 원룸 인테리어도 전문적으로 진행합니다. 좁은 공간의 효율성을 극대화하는 디자인을 제안해 드립니다. 비용을 줄이는 방법으로는 전체 시공 대신 도배, 장판, 조명 교체 등의 부분 인테리어만 진행하거나, 기성 가구를 활용하여 홈스타일링을 하는 방법이 있습니다. 홍대 원룸 인테리어 싼곳을 찾으신다면 저희에게 문의해 주세요.</dd>
+  </dl>
+</section>
+
+<section id="contact" aria-label="문의하기">
+  <h2>문의 및 상담 안내</h2>
+  <p><strong>전화 상담:</strong> 010-1234-5678</p>
+  <p><strong>이메일 문의:</strong> info@yourdomain.kr</p>
+  <p><strong>주소:</strong> 서울특별시 마포구 와우산로 100</p>
+  <p><strong>영업시간:</strong> 월~토 09:00~18:00 (사전 예약 시 일요일 상담 가능)</p>
+</section>
+
+<script>
+  // FAQ 토글 기능
+  document.querySelectorAll('.faq dt').forEach(item => {
+    item.addEventListener('click', event => {
+      const dd = event.target.nextElementSibling;
+      if (dd.style.display === 'block') {
+        dd.style.display = 'none';
+        item.classList.remove('active');
+      } else {
+        dd.style.display = 'block';
+        item.classList.add('active');
+      }
+    });
+  });
+</script>
+
+
+  
